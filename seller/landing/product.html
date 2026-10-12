@@ -1,0 +1,1180 @@
+<!DOCTYPE html>
+<html lang="bn">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Ghoti Market - Product Landing Page</title>
+    <style>
+        :root {
+            --primary-orange: #FF6A00;
+            --secondary-orange: #FF8A00;
+            --dark-text: #222222;
+            --bg-color: #FFF9F5;
+            --white: #FFFFFF;
+            --border-color: #F0E3D9;
+            --transition: all 0.3s ease;
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+        }
+
+        body {
+            background-color: var(--bg-color);
+            color: var(--dark-text);
+            line-height: 1.6;
+            overflow-x: hidden;
+        }
+
+        /* Announcement Bar */
+        .announcement-bar {
+            background: linear-gradient(135deg, var(--primary-orange), var(--secondary-orange));
+            color: var(--white);
+            padding: 10px 0;
+            font-size: 14px;
+            font-weight: 600;
+            white-space: nowrap;
+            overflow: hidden;
+            position: relative;
+            box-shadow: 0 2px 5px rgba(255, 106, 0, 0.2);
+        }
+
+        .announcement-content {
+            display: inline-block;
+            animation: marquee 25s linear infinite;
+        }
+
+        .announcement-bar:hover .announcement-content {
+            animation-play-state: paused;
+        }
+
+        @keyframes marquee {
+            0% { transform: translateX(100%); }
+            100% { transform: translateX(-100%); }
+        }
+
+        /* Header */
+        header {
+            background: var(--white);
+            padding: 15px 20px;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.05);
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            position: sticky;
+            top: 0;
+            z-index: 100;
+        }
+
+        .logo {
+            font-size: 22px;
+            font-weight: 800;
+            color: var(--primary-orange);
+            text-decoration: none;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+
+        .main-container {
+            max-width: 1200px;
+            margin: 20px auto;
+            padding: 0 15px;
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 30px;
+        }
+
+        @media(max-width: 900px) {
+            .main-container {
+                grid-template-columns: 1fr;
+            }
+        }
+
+        /* Product Gallery */
+        .product-gallery {
+            background: var(--white);
+            padding: 20px;
+            border-radius: 16px;
+            border: 1px solid var(--border-color);
+            box-shadow: 0 4px 15px rgba(0,0,0,0.03);
+        }
+
+        .main-image-container {
+            position: relative;
+            width: 100%;
+            height: 380px;
+            border-radius: 12px;
+            overflow: hidden;
+            background: #fcfcfc;
+            border: 1px solid var(--border-color);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .main-image-container img {
+            width: 100%;
+            height: 100%;
+            object-fit: contain;
+            cursor: pointer;
+            transition: var(--transition);
+        }
+
+        .slider-btn {
+            position: absolute;
+            top: 50%;
+            transform: translateY(-50%);
+            background: rgba(255, 106, 0, 0.8);
+            color: var(--white);
+            border: none;
+            width: 40px;
+            height: 40px;
+            border-radius: 50%;
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            transition: var(--transition);
+            z-index: 10;
+        }
+
+        .slider-btn:hover {
+            background: var(--primary-orange);
+        }
+
+        .prev-btn { left: 10px; }
+        .next-btn { right: 10px; }
+
+        .thumbnail-container {
+            display: flex;
+            gap: 10px;
+            margin-top: 15px;
+            overflow-x: auto;
+            padding-bottom: 5px;
+        }
+
+        .thumbnail {
+            width: 70px;
+            height: 70px;
+            border-radius: 8px;
+            border: 2px solid var(--border-color);
+            cursor: pointer;
+            object-fit: cover;
+            transition: var(--transition);
+            flex-shrink: 0;
+        }
+
+        .thumbnail.active {
+            border-color: var(--primary-orange);
+            transform: scale(1.05);
+        }
+
+        /* Product Details Info */
+        .product-info-section {
+            background: var(--white);
+            padding: 25px;
+            border-radius: 16px;
+            border: 1px solid var(--border-color);
+            box-shadow: 0 4px 15px rgba(0,0,0,0.03);
+        }
+
+        .dynamic-headline {
+            font-size: 18px;
+            font-weight: 700;
+            color: var(--primary-orange);
+            margin-bottom: 12px;
+            min-height: 28px;
+        }
+
+        .product-title {
+            font-size: 24px;
+            font-weight: 800;
+            color: var(--dark-text);
+            margin-bottom: 15px;
+        }
+
+        .price-box {
+            display: flex;
+            align-items: center;
+            gap: 15px;
+            margin-bottom: 20px;
+            flex-wrap: wrap;
+        }
+
+        .current-price {
+            font-size: 28px;
+            font-weight: 800;
+            color: var(--primary-orange);
+        }
+
+        .old-price {
+            font-size: 18px;
+            color: #888;
+            text-decoration: line-through;
+        }
+
+        .discount-badge {
+            background: #FFE8D6;
+            color: var(--primary-orange);
+            padding: 5px 12px;
+            border-radius: 20px;
+            font-size: 14px;
+            font-weight: 700;
+        }
+
+        .description-box {
+            font-size: 15px;
+            color: #555;
+            margin-bottom: 25px;
+            white-space: pre-line;
+            background: var(--bg-color);
+            padding: 15px;
+            border-radius: 8px;
+            border-left: 4px solid var(--primary-orange);
+        }
+
+        /* Variants */
+        .variant-group {
+            margin-bottom: 20px;
+        }
+
+        .variant-title {
+            font-size: 15px;
+            font-weight: 700;
+            margin-bottom: 8px;
+            color: var(--dark-text);
+        }
+
+        .variant-options {
+            display: flex;
+            gap: 10px;
+            flex-wrap: wrap;
+        }
+
+        .variant-btn {
+            background: var(--white);
+            border: 2px solid var(--border-color);
+            padding: 8px 16px;
+            border-radius: 8px;
+            cursor: pointer;
+            font-weight: 600;
+            font-size: 14px;
+            transition: var(--transition);
+        }
+
+        .variant-btn.selected {
+            border-color: var(--primary-orange);
+            background: #FFF1EC;
+            color: var(--primary-orange);
+        }
+
+        /* Order Button Primary */
+        .primary-order-btn {
+            width: 100%;
+            background: linear-gradient(135deg, var(--primary-orange), var(--secondary-orange));
+            color: var(--white);
+            border: none;
+            padding: 15px;
+            font-size: 18px;
+            font-weight: 700;
+            border-radius: 12px;
+            cursor: pointer;
+            box-shadow: 0 4px 15px rgba(255, 106, 0, 0.3);
+            transition: var(--transition);
+            text-align: center;
+            margin-top: 10px;
+        }
+
+        .primary-order-btn:hover {
+            opacity: 0.95;
+            transform: translateY(-2px);
+        }
+
+        /* Order Form Section */
+        .order-form-section {
+            grid-column: 1 / -1;
+            background: var(--white);
+            padding: 30px;
+            border-radius: 16px;
+            border: 1px solid var(--border-color);
+            box-shadow: 0 4px 15px rgba(0,0,0,0.03);
+            margin-top: 20px;
+        }
+
+        .section-heading {
+            font-size: 22px;
+            font-weight: 800;
+            margin-bottom: 20px;
+            color: var(--dark-text);
+            text-align: center;
+            position: relative;
+        }
+
+        .section-heading::after {
+            content: '';
+            width: 60px;
+            height: 3px;
+            background: var(--primary-orange);
+            display: block;
+            margin: 8px auto 0;
+            border-radius: 2px;
+        }
+
+        .form-grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 20px;
+        }
+
+        @media(max-width: 768px) {
+            .form-grid {
+                grid-template-columns: 1fr;
+            }
+        }
+
+        .form-group {
+            margin-bottom: 15px;
+        }
+
+        .form-group.full-width {
+            grid-column: 1 / -1;
+        }
+
+        .form-label {
+            display: block;
+            font-size: 14px;
+            font-weight: 700;
+            margin-bottom: 6px;
+            color: var(--dark-text);
+        }
+
+        .form-input, .form-textarea {
+            width: 100%;
+            padding: 12px 15px;
+            border: 2px solid var(--border-color);
+            border-radius: 8px;
+            font-size: 15px;
+            outline: none;
+            transition: var(--transition);
+            background: #fdfdfd;
+        }
+
+        .form-input:focus, .form-textarea:focus {
+            border-color: var(--primary-orange);
+            background: var(--white);
+        }
+
+        /* Delivery Location Cards */
+        .delivery-options {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 15px;
+            margin-bottom: 20px;
+        }
+
+        @media(max-width: 600px) {
+            .delivery-options {
+                grid-template-columns: 1fr;
+            }
+        }
+
+        .delivery-card {
+            border: 2px solid var(--border-color);
+            padding: 15px;
+            border-radius: 10px;
+            cursor: pointer;
+            transition: var(--transition);
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            background: var(--white);
+        }
+
+        .delivery-card.selected {
+            border-color: var(--primary-orange);
+            background: #FFF1EC;
+        }
+
+        .delivery-card-title {
+            font-weight: 700;
+            font-size: 15px;
+        }
+
+        .delivery-card-price {
+            font-weight: 800;
+            color: var(--primary-orange);
+        }
+
+        /* Live Order Summary Card */
+        .order-summary-card {
+            background: var(--bg-color);
+            border: 1px solid var(--border-color);
+            padding: 20px;
+            border-radius: 12px;
+            margin-bottom: 20px;
+        }
+
+        .summary-row {
+            display: flex;
+            justify-content: space-between;
+            margin-bottom: 10px;
+            font-size: 15px;
+            color: #555;
+        }
+
+        .summary-row.total {
+            font-size: 18px;
+            font-weight: 800;
+            color: var(--dark-text);
+            border-top: 2px dashed var(--border-color);
+            padding-top: 12px;
+            margin-top: 10px;
+        }
+
+        .summary-row.total span:last-child {
+            color: var(--primary-orange);
+        }
+
+        /* Custom Popup Modal */
+        .modal-overlay {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0,0,0,0.6);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            z-index: 1000;
+            opacity: 0;
+            visibility: hidden;
+            transition: var(--transition);
+        }
+
+        .modal-overlay.active {
+            opacity: 1;
+            visibility: visible;
+        }
+
+        .modal-box {
+            background: var(--white);
+            width: 90%;
+            max-width: 420px;
+            padding: 30px;
+            border-radius: 16px;
+            text-align: center;
+            transform: scale(0.8);
+            transition: var(--transition);
+            box-shadow: 0 10px 30px rgba(0,0,0,0.2);
+        }
+
+        .modal-overlay.active .modal-box {
+            transform: scale(1);
+        }
+
+        .modal-icon {
+            width: 60px;
+            height: 60px;
+            margin: 0 auto 15px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            background: #FFF1EC;
+            border-radius: 50%;
+            color: var(--primary-orange);
+        }
+
+        .modal-title {
+            font-size: 20px;
+            font-weight: 800;
+            margin-bottom: 10px;
+            color: var(--dark-text);
+        }
+
+        .modal-desc {
+            font-size: 14px;
+            color: #666;
+            margin-bottom: 20px;
+        }
+
+        .modal-btn {
+            background: var(--primary-orange);
+            color: var(--white);
+            border: none;
+            padding: 10px 25px;
+            border-radius: 8px;
+            font-weight: 700;
+            cursor: pointer;
+            transition: var(--transition);
+        }
+
+        .modal-btn:hover {
+            opacity: 0.9;
+        }
+
+        /* Fullscreen Image Viewer */
+        .lightbox {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0,0,0,0.9);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            z-index: 2000;
+            opacity: 0;
+            visibility: hidden;
+            transition: var(--transition);
+        }
+
+        .lightbox.active {
+            opacity: 1;
+            visibility: visible;
+        }
+
+        .lightbox img {
+            max-width: 90%;
+            max-height: 90%;
+            object-fit: contain;
+            border-radius: 8px;
+        }
+
+        .lightbox-close {
+            position: absolute;
+            top: 20px;
+            right: 20px;
+            background: var(--white);
+            border: none;
+            width: 40px;
+            height: 40px;
+            border-radius: 50%;
+            font-size: 20px;
+            font-weight: bold;
+            cursor: pointer;
+        }
+
+        /* Footer */
+        footer {
+            text-align: center;
+            padding: 25px;
+            background: var(--white);
+            border-top: 1px solid var(--border-color);
+            color: #777;
+            font-size: 14px;
+            margin-top: 40px;
+        }
+
+        /* Screen States */
+        .state-screen {
+            max-width: 600px;
+            margin: 80px auto;
+            background: var(--white);
+            padding: 40px;
+            border-radius: 16px;
+            text-align: center;
+            border: 1px solid var(--border-color);
+            box-shadow: 0 4px 15px rgba(0,0,0,0.05);
+        }
+
+        .state-screen h2 {
+            font-size: 24px;
+            color: var(--primary-orange);
+            margin-bottom: 15px;
+        }
+
+        .state-screen p {
+            color: #666;
+            font-size: 16px;
+        }
+
+        .hidden { display: none !important; }
+    </style>
+</head>
+<body>
+
+    <!-- Top Announcement Bar -->
+    <div id="announcementBar" class="announcement-bar hidden">
+        <div id="announcementText" class="announcement-content"></div>
+    </div>
+
+    <!-- Header -->
+    <header>
+        <a href="#" class="logo">
+            <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M6 2L3 6v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2V6l-3-4z"></path><line x1="3" y1="6" x2="21" y2="6"></line><path d="M16 10a4 4 0 0 1-8 0"></path></svg>
+            Ghoti Market
+        </a>
+    </header>
+
+    <!-- Loading State -->
+    <div id="loadingScreen" class="state-screen">
+        <h2>লোড হচ্ছে...</h2>
+        পণ্যটির তথ্য সংগ্রহ করা হচ্ছে, অনুগ্রহ করে অপেক্ষা করুন।
+    </div>
+
+    <!-- Error / Inactive State -->
+    <div id="errorScreen" class="state-screen hidden">
+        <h2 id="errorTitle">প্রোডাক্ট খুঁজে পাওয়া যায়নি!</h2>
+        <p id="errorDesc">এই প্রোডাক্ট এখন সবার দেখার জন্য অনুমতি নেই অথবা লিংকটি ভুল।</p>
+    </div>
+
+    <!-- Main Content Container -->
+    <div id="mainContent" class="main-container hidden">
+        
+        <!-- Product Gallery Column -->
+        <div class="product-gallery">
+            <div class="main-image-container" id="mainImageContainer">
+                <button class="slider-btn prev-btn" id="prevImgBtn">&#10094;</button>
+                <img id="mainProductImage" src="" alt="Product Image">
+                <button class="slider-btn next-btn" id="nextImgBtn">&#10095;</button>
+            </div>
+            <div class="thumbnail-container" id="thumbnailContainer"></div>
+        </div>
+
+        <!-- Product Info Column -->
+        <div class="product-info-section">
+            <div id="dynamicHeadline" class="dynamic-headline"></div>
+            <h1 id="productTitle" class="product-title"></h1>
+            
+            <div class="price-box">
+                <span id="currentPrice" class="current-price"></span>
+                <span id="oldPrice" class="old-price"></span>
+                <span id="discountBadge" class="discount-badge hidden"></span>
+            </div>
+
+            <div id="productDescription" class="description-box"></div>
+
+            <!-- Variants Container -->
+            <div id="variantsContainer"></div>
+
+            <button type="button" class="primary-order-btn" id="scrollToOrderBtn">এখনই অর্ডার করুন</button>
+        </div>
+
+        <!-- Order Form Section -->
+        <div class="order-form-section" id="orderSection">
+            <h2 class="section-heading">অর্ডার করতে আপনার তথ্য দিন</h2>
+            
+            <form id="orderForm">
+                <!-- Delivery Location Selector -->
+                <div class="form-group full-width">
+                    <label class="form-label">ডেলিভারি এলাকা নির্বাচন করুন *</label>
+                    <div class="delivery-options">
+                        <div class="delivery-card" data-location="inside_dhaka" data-charge="70">
+                            <span class="delivery-card-title">ঢাকার ভেতরে</span>
+                            <span class="delivery-card-price">৳70</span>
+                        </div>
+                        <div class="delivery-card" data-location="outside_dhaka" data-charge="130">
+                            <span class="delivery-card-title">ঢাকার বাইরে</span>
+                            <span class="delivery-card-price">৳130</span>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Live Order Summary -->
+                <div class="order-summary-card">
+                    <div class="summary-row">
+                        <span id="summaryProductName">প্রোডাক্ট</span>
+                        <span id="summaryBasePrice">৳0</span>
+                    </div>
+                    <div class="summary-row" id="summaryVariantRow" style="display: none;">
+                        <span id="summaryVariantName">ভ্যারিয়েন্ট এক্সট্রা</span>
+                        <span id="summaryVariantPrice">৳0</span>
+                    </div>
+                    <div class="summary-row">
+                        <span>ডেলিভারি চার্জ</span>
+                        <span id="summaryDeliveryCharge">৳0</span>
+                    </div>
+                    <div class="summary-row total">
+                        <span>সর্বমোট প্রদেয়</span>
+                        <span id="summaryGrandTotal">৳0</span>
+                    </div>
+                </div>
+
+                <div class="form-grid">
+                    <div class="form-group">
+                        <label class="form-label">আপনার পূর্ণ নাম *</label>
+                        <input type="text" id="name" class="form-input" placeholder="আপনার সম্পূর্ণ নাম লিখুন" required>
+                    </div>
+                    <div class="form-group">
+                        <label class="form-label">মোবাইল নাম্বার *</label>
+                        <input type="tel" id="phone" class="form-input" placeholder="01XXXXXXXXX" required>
+                    </div>
+                    <div class="form-group">
+                        <label class="form-label">বিভাগ *</label>
+                        <input type="text" id="vibag" class="form-input" placeholder="যেমন: সিলেট" required>
+                    </div>
+                    <div class="form-group">
+                        <label class="form-label">জেলা *</label>
+                        <input type="text" id="jela" class="form-input" placeholder="যেমন: সুনামগঞ্জ" required>
+                    </div>
+                    <div class="form-group">
+                        <label class="form-label">উপজেলা/থানা *</label>
+                        <input type="upojela" id="upojela" class="form-input" placeholder="যেমন: ছাতক" required>
+                    </div>
+                    <div class="form-group">
+                        <label class="form-label">নোট (ঐচ্ছিক)</label>
+                        <input type="text" id="note" class="form-input" placeholder="বিশেষ কোনো নির্দেশনা থাকলে লিখুন">
+                    </div>
+                </div>
+
+                <button type="submit" class="primary-order-btn" id="submitOrderBtn">অর্ডার কমপ্লিট করুন</button>
+            </form>
+        </div>
+
+    </div>
+
+    <!-- Custom Popup Modal -->
+    <div id="customModal" class="modal-overlay">
+        <div class="modal-box">
+            <div class="modal-icon" id="modalIcon">
+                <svg width="32" height="32" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="20 6 9 17 4 12"></polyline></svg>
+            </div>
+            <h3 class="modal-title" id="modalTitle">সফল হয়েছে</h3>
+            <p class="modal-desc" id="modalDesc">আপনার অর্ডারটি সফলভাবে গ্রহণ করা হয়েছে।</p>
+            <button class="modal-btn" id="modalCloseBtn">ঠিক আছে</button>
+        </div>
+    </div>
+
+    <!-- Fullscreen Lightbox -->
+    <div id="lightbox" class="lightbox">
+        <button class="lightbox-close" id="lightboxClose">&times;</button>
+        <img id="lightboxImg" src="" alt="Fullscreen Image">
+    </div>
+
+    <!-- Footer -->
+    <footer>
+        &copy; <span id="currentYear"></span> Ghoti Market. All rights reserved.
+    </footer>
+
+    <!-- Firebase SDK (Modular/Compat compatible structure) -->
+    <script src="https://www.gstatic.com/firebasejs/9.23.0/firebase-app-compat.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/9.23.0/firebase-firestore-compat.js"></script>
+
+    <script>
+        const firebaseConfig = { 
+            apiKey: "AIzaSyBUhNhYvuo_FTvZ5RZR6Gn-4hsUY21S0XE", 
+            authDomain: "ghotimarket.firebaseapp.com", 
+            projectId: "ghotimarket", 
+            storageBucket: "ghotimarket.firebasestorage.app", 
+            messagingSenderId: "481257644093", 
+            appId: "1:481257644093:web:0dfc3699d6b3c86afeca54" 
+        };
+
+        // Initialize Firebase
+        if (!firebase.apps.length) {
+            firebase.initializeApp(firebaseConfig);
+        }
+        const db = firebase.firestore();
+
+        /* Global App States */
+        let currentProduct = null;
+        let firestoreDocId = null;
+        let selectedImages = [];
+        let currentImageIndex = 0;
+        let selectedVariantsState = {};
+        let selectedDeliveryLocation = null;
+        let deliveryChargeAmount = 0;
+        let isSubmitting = false;
+
+        document.getElementById('currentYear').textContent = new Date().getFullYear();
+
+        /* ==========================================
+           2. URL SLUG EXTRACTION
+           ========================================== */
+        function extractSlug() {
+            const searchParams = new URLSearchParams(window.location.search);
+            const keys = Array.from(searchParams.keys());
+            if (keys.length > 0) {
+                // First parameter key or value depending on structure
+                let firstKey = keys[0];
+                if (firstKey && firstKey.length > 0 && !['fbclid', 'gclid', 'utm_source', 'utm_medium', 'utm_campaign', 'ref'].includes(firstKey)) {
+                    // Sometimes slug is the key itself if no '=' or first value
+                    let val = searchParams.get(firstKey);
+                    return (val !== null && val !== '') ? firstKey : firstKey;
+                }
+            }
+            return null;
+        }
+
+        // Fetch Product from Firestore
+        async function loadProductData() {
+            const rawSlug = extractSlug();
+            if (!rawSlug) {
+                showErrorScreen("প্রোডাক্ট লিংকটি সঠিক নয়!", "সঠিক প্রোডাক্ট লিংকের মাধ্যমে প্রবেশ করুন।");
+                return;
+            }
+
+            try {
+                const snapshot = await db.collection("products").where("slug", "==", rawSlug).limit(1).get();
+                
+                if (snapshot.empty) {
+                    showErrorScreen("প্রোডাক্ট খুঁজে পাওয়া যায়নি!", "এই নামের কোনো পণ্য আমাদের ডাটাবেসে বিদ্যমান নেই।");
+                    return;
+                }
+
+                const doc = snapshot.docs[0];
+                firestoreDocId = doc.id;
+                currentProduct = doc.data();
+
+                // Active Validation Check
+                if (currentProduct.active !== true) {
+                    showErrorScreen("এই প্রোডাক্ট এখন সবার দেখার জন্য অনুমতি নেই!", "বর্তমানে পণ্যটির কার্যক্রম স্থগিত রয়েছে।");
+                    return;
+                }
+
+                renderProductPage();
+
+            } catch (error) {
+                console.error("Error fetching product:", error);
+                showErrorScreen("সার্ভার ত্রুটি!", "পণ্য লোড করতে সমস্যা হয়েছে। দয়া করে কিছুক্ষণ পর আবার চেষ্টা করুন।");
+            }
+        }
+
+        function showErrorScreen(title, desc) {
+            document.getElementById('loadingScreen').classList.add('hidden');
+            document.getElementById('errorTitle').textContent = title;
+            document.getElementById('errorDesc').textContent = desc;
+            document.getElementById('errorScreen').classList.remove('hidden');
+        }
+
+        /* ==========================================
+           3. RENDER PRODUCT DATA & UI
+           ========================================== */
+        function renderProductPage() {
+            document.getElementById('loadingScreen').classList.add('hidden');
+            document.getElementById('mainContent').classList.remove('hidden');
+
+            // Announcement Bar
+            if (currentProduct.description && currentProduct.description.trim() !== "") {
+                const bar = document.getElementById('announcementBar');
+                const textElem = document.getElementById('announcementText');
+                textElem.textContent = currentProduct.description.substring(0, 150) + " — Ghoti Market Exclusive Product!";
+                bar.classList.remove('hidden');
+            }
+
+            // Typing Animation Headline
+            const headlineElem = document.getElementById('dynamicHeadline');
+            const productName = currentProduct.name || "পণ্যের";
+            headlineElem.textContent = `আপনার পছন্দের পণ্য ${productName} অর্ডার করুন এখনই!`;
+
+            // Title & Description
+            document.getElementById('productTitle').textContent = currentProduct.name || "";
+            document.getElementById('productDescription').textContent = currentProduct.description || "কোনো বিবরণ উপলব্ধ নেই।";
+
+            // Pricing & Discount
+            const price = Number(currentProduct.price) || 0;
+            const oldPrice = Number(currentProduct.oldPrice) || 0;
+            
+            document.getElementById('currentPrice').textContent = `৳${price.toLocaleString('en-BD')}`;
+            
+            if (oldPrice > price) {
+                document.getElementById('oldPrice').textContent = `৳${oldPrice.toLocaleString('en-BD')}`;
+                const discountPercent = Math.round(((oldPrice - price) / oldPrice) * 100);
+                const discountBadge = document.getElementById('discountBadge');
+                discountBadge.textContent = `${discountPercent}% ছাড়`;
+                discountBadge.classList.remove('hidden');
+            }
+
+            // Images Setup
+            selectedImages = (Array.isArray(currentProduct.images) && currentProduct.images.length > 0) 
+                ? currentProduct.images 
+                : ["https://i.ibb.co/Z0d3cPK/image.webp"];
+            
+            setupGallery();
+            setupVariants();
+            updateOrderSummary();
+        }
+
+        /* ==========================================
+           4. IMAGE GALLERY & SLIDER
+           ========================================== */
+        function setupGallery() {
+            const mainImg = document.getElementById('mainProductImage');
+            const thumbContainer = document.getElementById('thumbnailContainer');
+            
+            mainImg.src = selectedImages[0];
+            mainImg.alt = currentProduct.name;
+
+            thumbContainer.innerHTML = "";
+            selectedImages.forEach((imgUrl, index) => {
+                const thumb = document.createElement('img');
+                thumb.src = imgUrl;
+                thumb.className = `thumbnail ${index === 0 ? 'active' : ''}`;
+                thumb.addEventListener('click', () => {
+                    currentImageIndex = index;
+                    updateMainImage();
+                });
+                thumbContainer.appendChild(thumb);
+            });
+
+            document.getElementById('prevImgBtn').addEventListener('click', () => {
+                currentImageIndex = (currentImageIndex - 1 + selectedImages.length) % selectedImages.length;
+                updateMainImage();
+            });
+
+            document.getElementById('nextImgBtn').addEventListener('click', () => {
+                currentImageIndex = (currentImageIndex + 1) % selectedImages.length;
+                updateMainImage();
+            });
+
+            // Lightbox
+            mainImg.addEventListener('click', () => {
+                document.getElementById('lightboxImg').src = selectedImages[currentImageIndex];
+                document.getElementById('lightbox').classList.add('active');
+            });
+
+            document.getElementById('lightboxClose').addEventListener('click', () => {
+                document.getElementById('lightbox').classList.remove('active');
+            });
+        }
+
+        function updateMainImage() {
+            document.getElementById('mainProductImage').src = selectedImages[currentImageIndex];
+            const thumbs = document.querySelectorAll('.thumbnail');
+            thumbs.forEach((t, idx) => {
+                if (idx === currentImageIndex) t.classList.add('active');
+                else t.classList.remove('active');
+            });
+        }
+
+        /* ==========================================
+           5. PRODUCT VARIANTS MANAGEMENT
+           ========================================== */
+        function setupVariants() {
+            const container = document.getElementById('variantsContainer');
+            container.innerHTML = "";
+
+            if (!Array.isArray(currentProduct.variants) || currentProduct.variants.length === 0) {
+                return;
+            }
+
+            currentProduct.variants.forEach(group => {
+                const groupDiv = document.createElement('div');
+                groupDiv.className = 'variant-group';
+
+                const title = document.createElement('div');
+                title.className = 'variant-title';
+                title.textContent = `${group.name}:`;
+                groupDiv.appendChild(title);
+
+                const optionsDiv = document.createElement('div');
+                optionsDiv.className = 'variant-options';
+
+                group.values.forEach((valObj, vIdx) => {
+                    const btn = document.createElement('button');
+                    type = "button";
+                    btn.className = `variant-btn ${vIdx === 0 ? 'selected' : ''}`;
+                    let extraText = valObj.extraPrice > 0 ? ` (+৳${valObj.extraPrice})` : '';
+                    btn.textContent = `${valObj.value}${extraText}`;
+                    
+                    // Default select first item
+                    if (vIdx === 0) {
+                        selectedVariantsState[group.name] = {
+                            name: group.name,
+                            value: valObj.value,
+                            extraPrice: Number(valObj.extraPrice) || 0
+                        };
+                    }
+
+                    btn.addEventListener('click', () => {
+                        optionsDiv.querySelectorAll('.variant-btn').forEach(b => b.classList.remove('selected'));
+                        btn.classList.add('selected');
+                        
+                        selectedVariantsState[group.name] = {
+                            name: group.name,
+                            value: valObj.value,
+                            extraPrice: Number(valObj.extraPrice) || 0
+                        };
+                        updateOrderSummary();
+                    });
+
+                    optionsDiv.appendChild(btn);
+                });
+
+                groupDiv.appendChild(optionsDiv);
+                container.appendChild(groupDiv);
+            });
+        }
+
+        /* ==========================================
+           6. LIVE ORDER SUMMARY & CALCULATIONS
+           ========================================== */
+        document.querySelectorAll('.delivery-card').forEach(card => {
+            card.addEventListener('click', () => {
+                document.querySelectorAll('.delivery-card').forEach(c => c.classList.remove('selected'));
+                card.classList.add('selected');
+                selectedDeliveryLocation = card.getAttribute('data-location');
+                deliveryChargeAmount = Number(card.getAttribute('data-charge')) || 0;
+                updateOrderSummary();
+            });
+        });
+
+        function calculatePrices() {
+            const basePrice = Number(currentProduct.price) || 0;
+            let variantExtraPrice = 0;
+            
+            Object.values(selectedVariantsState).forEach(v => {
+                variantExtraPrice += Number(v.extraPrice) || 0;
+            });
+
+            const subtotal = basePrice + variantExtraPrice;
+            const grandTotal = subtotal + deliveryChargeAmount;
+
+            return { basePrice, variantExtraPrice, subtotal, grandTotal };
+        }
+
+        function updateOrderSummary() {
+            if (!currentProduct) return;
+            const prices = calculatePrices();
+
+            document.getElementById('summaryProductName').textContent = currentProduct.name;
+            document.getElementById('summaryBasePrice').textContent = `৳${prices.basePrice.toLocaleString('en-BD')}`;
+
+            const varRow = document.getElementById('summaryVariantRow');
+            if (prices.variantExtraPrice > 0) {
+                let variantNamesText = Object.values(selectedVariantsState).map(v => `${v.name}: ${v.value}`).join(', ');
+                document.getElementById('summaryVariantName').textContent = `ভ্যারিয়েন্ট (${variantNamesText})`;
+                document.getElementById('summaryVariantPrice').textContent = `+৳${prices.variantExtraPrice.toLocaleString('en-BD')}`;
+                varRow.style.display = 'flex';
+            } else {
+                varRow.style.display = 'none';
+            }
+
+            document.getElementById('summaryDeliveryCharge').textContent = `৳${deliveryChargeAmount.toLocaleString('en-BD')}`;
+            document.getElementById('summaryGrandTotal').textContent = `৳${prices.grandTotal.toLocaleString('en-BD')}`;
+        }
+
+        document.getElementById('scrollToOrderBtn').addEventListener('click', () => {
+            document.getElementById('orderSection').scrollIntoView({ behavior: 'smooth' });
+        });
+
+        /* ==========================================
+           7. FIRESTORE ORDER SUBMISSION
+           ========================================== */
+        document.getElementById('orderForm').addEventListener('submit', async (e) => {
+            e.preventDefault();
+            if (isSubmitting) return;
+
+            // Validation checks
+            if (!selectedDeliveryLocation) {
+                showCustomModal("ডেলিভারি এলাকা নির্বাচন করুন", "অনুগ্রহ করে ঢাকার ভেতরে অথবা ঢাকার বাইরে সিলেক্ট করুন।", false);
+                return;
+            }
+
+            const name = document.getElementById('name').value.trim();
+            const phone = document.getElementById('phone').value.trim();
+            const vibag = document.getElementById('vibag').value.trim();
+            const jela = document.getElementById('jela').value.trim();
+            const upojela = document.getElementById('upojela').value.trim();
+            const note = document.getElementById('note').value.trim();
+
+            if (!name || !phone || !vibag || !jela || !upojela) {
+                showCustomModal("অসম্পূর্ণ তথ্য", "সকল প্রয়োজনীয় ঘরগুলো পূরণ করুন।", false);
+                return;
+            }
+
+            // Phone Validation (BD format)
+            const phoneRegex = /^(?:\+88|88)?01[3-9]\d{8}$/;
+            if (!phoneRegex.test(phone)) {
+                showCustomModal("ভুল মোবাইল নাম্বার", "সঠিক ১১ ডিজিটের মোবাইল নাম্বার প্রদান করুন।", false);
+                return;
+            }
+
+            isSubmitting = true;
+            const submitBtn = document.getElementById('submitOrderBtn');
+            submitBtn.textContent = "অর্ডার প্রসেস হচ্ছে...";
+            submitBtn.disabled = true;
+
+            try {
+                // Re-verify product status before submit
+                const productRef = db.collection("products").doc(firestoreDocId);
+                const productSnap = await productRef.get();
+                
+                if (!productSnap.exists || productSnap.data().active !== true) {
+                    showCustomModal("অর্ডার বাতিল", "দুঃখিত, এই পণ্যটি বর্তমানে অর্ডার করার উপযোগী নয়।", false);
+                    isSubmitting = false;
+                    submitBtn.textContent = "অর্ডার কমপ্লিট করুন";
+                    submitBtn.disabled = false;
+                    return;
+                }
+
+                const liveProduct = productSnap.data();
+                const prices = calculatePrices();
+                const variantsArr = Object.values(selectedVariantsState);
+
+                const orderData = {
+                    name: name,
+                    phone: phone,
+                    vibag: vibag,
+                    jela: jela,
+                    upojela: upojela,
+                    note: note || "",
+                    createdAt: firebase.firestore.FieldValue.serverTimestamp(),
+                    status: "pending",
+                    productName: liveProduct.name || "",
+                    productId: firestoreDocId,
+                    productImage: (Array.isArray(liveProduct.images) && liveProduct.images.length > 0) ? liveProduct.images[0] : "",
+                    variants: variantsArr,
+                    deliverySite: selectedDeliveryLocation,
+                    sellerId: liveProduct.sellerId || "",
+                    productPrice: Number(liveProduct.price) || 0,
+                    variantPrice: prices.variantExtraPrice,
+                    subtotal: prices.subtotal,
+                    deliveryCharge: deliveryChargeAmount,
+                    total: prices.grandTotal
+                };
+
+                await db.collection("seller_landing_orders").add(orderData);
+
+                // Success Modal & Redirect
+                showCustomModal(
+                    "অভিনন্দন! আপনার অর্ডার সফলভাবে সম্পন্ন হয়েছে।", 
+                    "আপনার অর্ডারটি গ্রহণ করা হয়েছে। Ghoti Market-এর সঙ্গে থাকার জন্য ধন্যবাদ। ২ সেকেন্ড পর প্লে-স্টোরে রিডাইরেক্ট করা হচ্ছে...", 
+                    true
+                );
+
+                setTimeout(() => {
+                    window.location.href = "https://play.google.com/store/apps/details?id=com.ghotimarket.app";
+                }, 2000);
+
+            } catch (err) {
+                console.error("Order submission error:", err);
+                showCustomModal("ত্রুটি ঘটেছে!", "অর্ডার সম্পন্ন করা সম্ভব হয়নি। আবার চেষ্টা করুন।", false);
+                isSubmitting = false;
+                submitBtn.textContent = "অর্ডার কমপ্লিট করুন";
+                submitBtn.disabled = false;
+            }
+        });
+
+        /* ==========================================
+           8. CUSTOM POPUP MODAL SYSTEM
+           ========================================== */
+        function showCustomModal(title, desc, isSuccess) {
+            document.getElementById('modalTitle').textContent = title;
+            document.getElementById('modalDesc').textContent = desc;
+            
+            const iconElem = document.getElementById('modalIcon');
+            if (isSuccess) {
+                iconElem.innerHTML = `<svg width="32" height="32" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="20 6 9 17 4 12"></polyline></svg>`;
+            } else {
+                iconElem.innerHTML = `<svg width="32" height="32" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><circle cx="12" cy="12" r="10"></circle><line x1="12" y1="8" x2="12" y2="12"></line><line x1="12" y1="16" x2="12.01" y2="16"></line></svg>`;
+            }
+
+            document.getElementById('customModal').classList.add('active');
+        }
+
+        document.getElementById('modalCloseBtn').addEventListener('click', () => {
+            document.getElementById('customModal').classList.remove('active');
+        });
+
+        // Initialize Load
+        window.addEventListener('DOMContentLoaded', loadProductData);
+    </script>
+</body>
+</html>
